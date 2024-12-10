@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+const App = () => {
+  const [backendData, setBackendData] = React.useState([]);
+
+  const fetchData = async ()=> {
+    const res =await fetch("/api");
+    const jsonRes = await res.json();
+    console.log('jsonRes', jsonRes)
+  };
+
+  React.useEffect(()=>{
+    fetchData();
+
+  }, [])
+  console.log('efwdwe')
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      hello
     </div>
   );
 }
