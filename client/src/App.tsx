@@ -1,21 +1,49 @@
 import React from "react";
+import { get, post } from "./apiService";
+
+interface UserInterface {
+  id: string;
+  name: string;
+  age: number;
+}
 
 const App = () => {
-  const [backendData, setBackendData] = React.useState([]);
-  const [name, setName] = React.useState("");
-  const [age, setAge] = React.useState<number | undefined>(undefined);
+  const [users, setUsers] = React.useState<UserInterface[]>([]);
+  const [name, setName] = React.useState<string>("");
+  const [age, setAge] = React.useState<string>("");
+  const [error, setError] = React.useState("");
 
-  const fetchData = async () => {
-    // const res =await fetch("/api");
-    // const jsonRes = await res.json();
-    // console.log('jsonRes', jsonRes)
+  const getUsers = async () => {
+    const result = await get("api/users");
+    if (!("users" in result)) {
+      setError("Could not get users");
+    } else {
+      console.log(result.users);
+      setUsers(result.users);
+    }
   };
-  const handleSubmit = async () => {};
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (typeof Number(age) !== "number" && typeof name !== "string") {
+      alert("Put in correct values in the fields");
+    } else {
+      const response = await post(
+        "api/user",
+        JSON.stringify({ name: name, age: Number(age) })
+      );
+      setUsers(response.users);
+    }
+  };
 
   React.useEffect(() => {
-    fetchData();
+    getUsers();
   }, []);
-  console.log("efwdwe");
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -32,11 +60,18 @@ const App = () => {
           <input
             type="number"
             value={age}
-            onChange={(e) => setAge(Number(e.target.value))}
+            onChange={(e) => setAge(e.target.value)}
           />
         </label>
         <input type="submit" />
       </form>
+      {users.map((user) => (
+        <div key={user.id}>
+          <p>
+            {user.name}, {user.age}
+          </p>
+        </div>
+      ))}
     </div>
   );
 };

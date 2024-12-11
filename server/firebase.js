@@ -1,16 +1,19 @@
-const firebase = require("firebase");
-const secretKeys = require("./secretKeys")
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { keysFirebase } from "./secretKeys.js";
+
 
 const firebaseConfig = {
-  apiKey: secretKeys.apiKey,
-  authDomain: secretKeys.authDomain, 
-  projectId: secretKeys.projectId, 
-  storageBucket: secretKeys.storageBucket, 
-  messagingSenderId: secretKeys.messagingSenderId, 
-  appId: secretKeys.appId, 
-  measurementId: secretKeys.measurementId, 
+  apiKey: keysFirebase.apiKey,
+  authDomain: keysFirebase.authDomain,
+  projectId:keysFirebase.projectId,
+  storageBucket: keysFirebase.storageBucket,
+  messagingSenderId: keysFirebase.messagingSenderId,
+  appId: keysFirebase.appId,
+  measurementId: keysFirebase.measurementId,
 };
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-//const analytics = firebase.getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export { db };
