@@ -10,6 +10,7 @@ Add document { name: string, age: number }
 
 In server folder create js file called secretVariables.js and inside should look like the below.
 
+```javascript
 const keysFirebase = {
     apiKey: string,
     authDomain: string,
@@ -21,6 +22,8 @@ const keysFirebase = {
   };
  
 export { keysFirebase };
+\```
+
 
 
 ## Backend
