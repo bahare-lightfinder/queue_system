@@ -12,17 +12,20 @@ In server folder create js file called secretVariables.js and inside should look
 
 ```javascript
 const keysFirebase = {
-    apiKey: string,
-    authDomain: string,
-    projectId: string,
-    storageBucket: string,
-    messagingSenderId: string,
-    appId: string
-    measurementId: string
-  };
- 
+    apiKey: "your-api-key",
+    authDomain: "your-auth-domain",
+    projectId: "your-project-id",
+    storageBucket: "your-storage-bucket",
+    messagingSenderId: "your-messaging-sender-id",
+    appId: "your-app-id",
+    measurementId: "your-measurement-id"
+};
+
 export { keysFirebase };
-\```
+```
+
+
+
 
 
 
