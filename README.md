@@ -1,15 +1,40 @@
 # Getting Started with Queue App
 
 
+### DataBase
+## Cloud Firestore
+Create project in Firebase Console
+Go to Cloud Firestore
+Give collection name "users"
+Add document { name: string, age: number }
 
-## Available Scripts
+In server folder create js file called secretVariables.js and inside should look like the below.
 
-In the project directory, you can run:
+const keysFirebase = {
+    apiKey: string,
+    authDomain: string,
+    projectId: string,
+    storageBucket: string,
+    messagingSenderId: string,
+    appId: string
+    measurementId: string
+  };
+ 
+export { keysFirebase };
 
-### `npm start`
+
+## Backend
+### In the project directory, go to server folder
+#### `npm install`
+#### `npm run dev`
+
+## Frontend
+### In the project directory, go to client folder
+#### `npm install`
+#### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
-### `npm run dev`
+
