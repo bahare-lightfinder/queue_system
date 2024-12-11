@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { keysFirebase } from "./secretKeys.js";
+import { keysFirebase } from "./secretVariables.js";
 
 
 const firebaseConfig = {
