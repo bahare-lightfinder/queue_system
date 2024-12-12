@@ -1,5 +1,15 @@
 import React from "react";
 import { postRequest, getRequest, deleteRequest } from "./apiService";
+import {
+  Box,
+  TextField,
+  Button,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 
 interface UserInterface {
   id: string;
@@ -24,7 +34,7 @@ const App = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isNaN(Number(age)) === true && typeof name === "string") {
+    if (!isNaN(Number(age)) && typeof name === "string" && name.trim() !== "") {
       const response = await postRequest(
         "api/post/user",
         JSON.stringify({ name: name, age: Number(age) })
@@ -33,9 +43,10 @@ const App = () => {
       setName("");
       setAge("");
     } else {
-      alert("Put in correct values in the fields");
+      alert("Please provide valid values in the fields.");
     }
   };
+
   const removeUser = async (id: string) => {
     const result = await deleteRequest(`api/delete/user/${id}`);
     setUsers(result.users);
@@ -50,35 +61,65 @@ const App = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter your name:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <label>
-          Enter your age:
-          <input
-            type="text"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </label>
-        <input type="submit" />
-      </form>
-      {users.map((user) => (
-        <div key={user.id}>
-          <p>
-            {user.name}, {user.age}
-          </p>
-          <button onClick={() => removeUser(user.id)}>X</button>
-        </div>
-      ))}
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        width: 500,
+        flexDirection: "column",
+        gap: 2,
+        p: 2,
+      }}
+    >
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", alignItems: "center", gap: 2 }}
+      >
+        <TextField
+          label="Enter your name"
+          variant="outlined"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          label="Enter your age"
+          variant="outlined"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
+      </Box>
+
+      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+        {users.map((user) => (
+          <ListItem
+            key={user.id}
+            divider
+            disableGutters
+            secondaryAction={
+              <ListItemButton onClick={() => removeUser(user.id)}>
+                DELETE
+              </ListItemButton>
+            }
+          >
+            <ListItemText
+              primary={`Name: ${user.name}`}
+              secondary={
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ color: "text.primary", display: "inline" }}
+                >
+                  Age: {user.age}
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 };
 
